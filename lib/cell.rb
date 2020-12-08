@@ -13,4 +13,16 @@ class Cell
   def place_ship(ship)
     @ship = ship
   end
+
+  def render(show_ship = false)
+    if show_ship
+      "S"
+    elsif fire_upon
+      if empty?
+        "."
+      elseif
+        "H"
+      end
+    end
+  end
 end

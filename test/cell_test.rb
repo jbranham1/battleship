@@ -62,7 +62,7 @@ class CellTest < MiniTest::Test
     cell = Cell.new("B4")
     cell.place_ship(ship)
     3.times do
-      cell.hit
+      ship.hit
     end
 
     assert_equal true, ship.sunk?
@@ -72,6 +72,8 @@ class CellTest < MiniTest::Test
   def test_render_has_optional_argument
     ship = Ship.new("Cruiser", 3)
     cell = Cell.new("B4")
+
+    assert_equal ".", cell.render(true)
     cell.place_ship(ship)
 
     assert_equal "S", cell.render(true)
