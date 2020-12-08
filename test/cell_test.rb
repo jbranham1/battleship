@@ -30,4 +30,50 @@ class CellTest < MiniTest::Test
     assert_equal false, cell.empty?
     assert_equal ship, cell.ship
   end
+
+  def test_render_for_not_fired_upon
+    cell = Cell.new("B4")
+
+    assert_equal ".", cell.render
+  end
+
+  def test_render_for_fired_upon_with_no_ship
+    cell = Cell.new("B4")
+
+    assert_equal ".", cell.render
+    cell.fire_upon
+
+    assert_equal "M", cell.render
+  end
+
+  def test_render_for_fired_upon_with_ship
+    ship = Ship.new("Cruiser", 3)
+    cell = Cell.new("B4")
+    cell.place_ship(ship)
+
+    assert_equal ".", cell.render
+    cell.hit
+
+    assert_equal "H", cell.render
+  end
+
+  def test_render_for_fired_upon_sunk
+    ship = Ship.new("Cruiser", 3)
+    cell = Cell.new("B4")
+    cell.place_ship(ship)
+    3.times do
+      cell.hit
+    end
+
+    assert_equal true, ship.sunk?
+    assert_equal "X", cell.render
+  end
+
+  def test_render_has_optional_argument
+    ship = Ship.new("Cruiser", 3)
+    cell = Cell.new("B4")
+    cell.place_ship(ship)
+
+    assert_equal "S", cell.render(true)
+  end
 end
