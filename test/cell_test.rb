@@ -8,4 +8,12 @@ class CellTest < MiniTest::Test
 
     assert_instance_of Cell, cell
   end
+
+  def test_if_ship_in_cell
+    cell = Cell.new("B4")
+
+    assert_equal nil, cell.ship
+  end
+
+  
 end
