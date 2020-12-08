@@ -51,6 +51,6 @@ class CellTest < MiniTest::Test
     cell.fire_upon
 
     assert_equal 2, cell.ship.health
-  end 
+  end
 
 end
