@@ -17,24 +17,30 @@ class Cell
     @ship = ship
   end
 
-
-  def render(show_ship = false)
-    if show_ship
-      "S"
-    elsif fire_upon
-      if empty?
-        "."
-      elseif
-        "H"
-      end
-    end
+  def fired_upon?
+    fired_upon
   end
 
-
   def fire_upon
-    @fired_upon = true
-    if @ship != nil
+    if !empty? && !fired_upon
       @ship.hit
+    end
+    @fired_upon = true
+  end
+
+  def render(show_ship = false)
+    if !fired_upon?
+      if show_ship && !empty?
+        "S"
+      else
+        "."
+      end
+    elsif empty?
+      "M"
+    elsif !ship.sunk?
+      "H"
+    else
+      "X"
     end
   end
 end
