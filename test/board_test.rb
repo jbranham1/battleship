@@ -54,17 +54,14 @@ class BoardTest < MiniTest::Test
   end
 
   def test_consecutive_horizontal
-    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
-
     assert_equal false, board.consecutive?(["A1", "A2", "A4"])
     assert_equal false, board.consecutive?(["A1", "A2", "B3"])
     assert_equal true, board.consecutive?(["A1", "A2", "A3"])
   end
 
   def test_consecutive_vertical
-    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
 

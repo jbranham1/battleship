@@ -29,8 +29,6 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    @letters = (coordinates[0][0]..coordinates[-1][0]).to_a
-    @numbers = (coordinates[0][1]..coordinates[-1][1]).to_a
     if ship.length == coordinates.length
       consecutive?(coordinates)
     else
@@ -38,7 +36,13 @@ class Board
     end
   end
 
+  def set_letters_and_numbers(coordinates)
+    @letters = (coordinates[0][0]..coordinates[-1][0]).to_a
+    @numbers = (coordinates[0][1]..coordinates[-1][1]).to_a
+  end
+
   def consecutive?(coordinates)
+    set_letters_and_numbers(coordinates)
     if @letters.all?(coordinates[0][0])
       @numbers.size == coordinates.size
     elsif @numbers.all?(coordinates[0][1])
