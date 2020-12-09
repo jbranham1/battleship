@@ -30,7 +30,8 @@ class Board
 
   def valid_placement?(ship, coordinates)
     if ship.length == coordinates.length &&
-      coordinates.all? {|coordinate| valid_coordinate?(coordinate)}
+      coordinates.all? {|coordinate| valid_coordinate?(coordinate)} &&
+      coordinates.all? {|coordinate| @cells[coordinate].empty?}
       consecutive?(coordinates)
     else
       false
