@@ -8,11 +8,13 @@ require 'pry'
 class BoardTest < MiniTest::Test
   def test_it_exists
     board = Board.new
+
     assert_instance_of Board, board
   end
 
   def test_it_has_readable_attributes
     board = Board.new
+
     assert_equal 16, board.cells.count
     assert_equal Hash, board.cells.class
     assert_equal Cell, board.cells.values[1].class
@@ -68,6 +70,4 @@ class BoardTest < MiniTest::Test
     assert_equal false, board.consecutive?(cruiser, ["A1", "B1", "D1"])
     assert_equal true, board.consecutive?(cruiser, ["A1", "B1", "C1"])
   end
-
-
 end
