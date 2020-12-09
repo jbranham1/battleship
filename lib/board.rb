@@ -1,14 +1,10 @@
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/board'
-require './lib/cell'
-require './lib/ship'
+require "./lib/cell"
 
-class BoardTest < MiniTest::Test
+class Board
+  attr_reader :cells
 
-  def setup
-    @board = Board.new
-    @expected_board = {
+  def initialize
+    @cells = {
       "A1" => Cell.new("A1"),
       "A2" => Cell.new("A2"),
       "A3" => Cell.new("A3"),
@@ -26,15 +22,5 @@ class BoardTest < MiniTest::Test
       "D3" => Cell.new("D3"),
       "D4" => Cell.new("D4")
     }
-  end
-
-  def test_it_exists
-    assert_instance_of Board, @board
-  end
-
-  def test_it_has_readable_attributes
-    assert_equal 16, @board.cells.count
-    assert_equal Hash, @board.cells.class
-    assert_equal Cell, @board.cells.values[1].class  
   end
 end
