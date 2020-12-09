@@ -38,13 +38,13 @@ class Board
     end
   end
 
-    def consecutive?(coordinates)
-      if @letters.all?(coordinates[0][0])
-        @numbers.size == coordinates.size
-      elsif @numbers.all?(coordinates[0][1])
-        @letters.size == coordinates.size
-      else
-        false
-      end
+  def consecutive?(coordinates)
+    if @letters.all?(coordinates[0][0])
+      @numbers.size == coordinates.size
+    elsif @numbers.all?(coordinates[0][1])
+      @letters.size == coordinates.size
+    else
+      false
+    end
   end
 end
