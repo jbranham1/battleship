@@ -70,6 +70,24 @@ class BoardTest < MiniTest::Test
     assert_equal true, board.consecutive?(["A1", "B1", "C1"])
   end
 
+  def test_set_letters
+    board = Board.new
+    letters = ["A"]
+    assert_equal letters, board.set_letters(["A1", "A2", "A3"])
+
+    letters = ["A", "B", "C"]
+    assert_equal letters, board.set_letters(["A1", "B2", "C3"])
+  end
+
+  def test_set_numbers
+    board = Board.new
+    numbers = ["1","2","3"]
+    assert_equal numbers, board.set_numbers(["A1", "A2", "A3"])
+
+    numbers = ["1"]
+    assert_equal numbers, board.set_numbers(["A1", "B1", "C1"])
+  end
+
   def test_place_ship
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
