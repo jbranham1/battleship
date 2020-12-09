@@ -3,6 +3,7 @@ require 'minitest/pride'
 require './lib/board'
 require './lib/cell'
 require './lib/ship'
+require 'pry'
 
 class BoardTest < MiniTest::Test
   def test_it_exists
