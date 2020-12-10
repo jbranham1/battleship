@@ -60,6 +60,21 @@ class BoardTest < MiniTest::Test
     assert_equal false, board.valid_placement?(cruiser, ["A1", "B2", "C3"])
   end
 
+  def test_valid_placement_unordered
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+
+    assert_equal true, board.valid_placement?(cruiser, ["A1", "A3", "A2"])
+  end
+
+  def test_check_validation
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+
+    assert_equal true, board.check_validation(cruiser, ["A1", "B2", "C3"])
+    assert_equal false, board.check_validation(cruiser, ["A1", "B2"])
+  end
+
   def test_consecutive_horizontal
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
@@ -77,22 +92,22 @@ class BoardTest < MiniTest::Test
     assert_equal true, board.consecutive?(["A1", "B1", "C1"])
   end
 
-  def test_set_letters
+  def test_letters
     board = Board.new
     letters = ["A"]
-    assert_equal letters, board.set_letters(["A1", "A2", "A3"])
+    assert_equal letters, board.letters(["A1", "A2", "A3"])
 
     letters = ["A", "B", "C"]
-    assert_equal letters, board.set_letters(["A1", "B2", "C3"])
+    assert_equal letters, board.letters(["A1", "B2", "C3"])
   end
 
-  def test_set_numbers
+  def test_numbers
     board = Board.new
     numbers = ["1","2","3"]
-    assert_equal numbers, board.set_numbers(["A1", "A2", "A3"])
+    assert_equal numbers, board.numbers(["A1", "A2", "A3"])
 
     numbers = ["1"]
-    assert_equal numbers, board.set_numbers(["A1", "B1", "C1"])
+    assert_equal numbers, board.numbers(["A1", "B1", "C1"])
   end
 
   def test_place_ship

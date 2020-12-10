@@ -29,30 +29,32 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    if ship.length == coordinates.length &&
-      coordinates.all? {|coordinate| valid_coordinate?(coordinate)} &&
-      coordinates.all? {|coordinate| @cells[coordinate].empty?}
-      consecutive?(coordinates)
+    if check_validation(ship, coordinates)
+      consecutive?(coordinates.sort)
     else
       false
     end
   end
 
-  def set_letters(coordinates)
+  def check_validation(ship, coordinates)
+    ship.length == coordinates.length &&
+      coordinates.all? {|coordinate| valid_coordinate?(coordinate)} &&
+      coordinates.all? {|coordinate| @cells[coordinate].empty?}
+  end
+
+  def letters(coordinates)
     (coordinates[0][0]..coordinates[-1][0]).to_a
   end
 
-  def set_numbers(coordinates)
+  def numbers(coordinates)
     (coordinates[0][1]..coordinates[-1][1]).to_a
   end
 
   def consecutive?(coordinates)
-    letters = set_letters(coordinates)
-    numbers = set_numbers(coordinates)
-    if letters.all?(coordinates[0][0])
-      numbers.size == coordinates.size
-    elsif numbers.all?(coordinates[0][1])
-      letters.size == coordinates.size
+    if letters(coordinates).all?(coordinates[0][0])
+      numbers(coordinates).size == coordinates.size
+    elsif numbers(coordinates).all?(coordinates[0][1])
+      letters(coordinates).size == coordinates.size
     else
       false
     end
