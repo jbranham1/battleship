@@ -123,7 +123,7 @@ class BoardTest < MiniTest::Test
     assert_equal false, board.valid_placement?(submarine, ["A1", "A2"])
   end
 
-  def test_board_render
+  def test_board_render_empty
     board = Board.new
 
     empty_board = "  1 2 3 4 \n" +
@@ -133,6 +133,68 @@ class BoardTest < MiniTest::Test
                   "D  . . . . \n"
 
     assert_equal  empty_board, board.render
+  end
+
+  def test_board_render_hit
+    board = Board.new
+    ship = Ship.new("Cruiser", 3)
+    cell = Cell.new("A1")
+    board.place(ship, ["A1", "A2", "A3"])
+    board.cells["A1"].fire_upon
+
+    hit_board = "  1 2 3 4 \n" +
+                  "A  H . . . \n" +
+                  "B  . . . . \n" +
+                  "C  . . . . \n" +
+                  "D  . . . . \n"
+
+    assert_equal  hit_board, board.render
+  end
+
+  def test_board_render_miss
+    board = Board.new
+    ship = Ship.new("Cruiser", 3)
+    cell = Cell.new("A1")
+    board.place(ship, ["A1", "A2", "A3"])
+    board.cells["B1"].fire_upon
+
+    miss_board = "  1 2 3 4 \n" +
+                  "A  . . . . \n" +
+                  "B  M . . . \n" +
+                  "C  . . . . \n" +
+                  "D  . . . . \n"
+
+    assert_equal  miss_board, board.render
+  end
+
+  def test_board_render_sunk
+    board = Board.new
+    ship = Ship.new("Cruiser", 3)
+    cell = Cell.new("A1")
+    board.place(ship, ["A1", "A2", "A3"])
+    board.cells["A1"].fire_upon
+    board.cells["A2"].fire_upon
+    board.cells["A3"].fire_upon
+
+    sunk_board = "  1 2 3 4 \n" +
+                  "A  X X X . \n" +
+                  "B  . . . . \n" +
+                  "C  . . . . \n" +
+                  "D  . . . . \n"
+
+    assert_equal  sunk_board, board.render
+  end
+
+  def test_board_render_show_ship
+    board = Board.new
+
+    show_ship_board = "  1 2 3 4 \n" +
+                  "A  . . . . \n" +
+                  "B  . . . . \n" +
+                  "C  . . . . \n" +
+                  "D  . . . . \n"
+
+    #assert_equal  show_ship_board, board.render
   end
 
   def test_render_cell_values
