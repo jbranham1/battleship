@@ -33,6 +33,10 @@ class GameMessage
     puts "Please enter a valid coordinate:"
   end
 
+  def already_fired_on
+    puts "This cell has already been fired upon. Try again:"
+  end
+  
   def player_results(coordinate, render_value)
     result = get_render_result(render_value)
     puts "Your shot on #{coordinate} was a #{result}."
