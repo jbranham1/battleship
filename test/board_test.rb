@@ -59,7 +59,7 @@ class BoardTest < MiniTest::Test
 
     assert_equal false, board.valid_placement?(cruiser, ["A1", "B2", "C3"])
   end
-  
+
   def test_consecutive_horizontal
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
@@ -121,5 +121,98 @@ class BoardTest < MiniTest::Test
     cell_3 = board.cells["A3"]
 
     assert_equal false, board.valid_placement?(submarine, ["A1", "A2"])
+  end
+
+  def test_board_render_empty
+    board = Board.new
+
+    empty_board = "  1 2 3 4 \n" +
+                  "A  . . . . \n" +
+                  "B  . . . . \n" +
+                  "C  . . . . \n" +
+                  "D  . . . . \n"
+
+    assert_equal  empty_board, board.render
+  end
+
+  def test_board_render_hit
+    board = Board.new
+    ship = Ship.new("Cruiser", 3)
+    cell = Cell.new("A1")
+    board.place(ship, ["A1", "A2", "A3"])
+    board.cells["A1"].fire_upon
+
+    hit_board = "  1 2 3 4 \n" +
+                  "A  H . . . \n" +
+                  "B  . . . . \n" +
+                  "C  . . . . \n" +
+                  "D  . . . . \n"
+
+    assert_equal  hit_board, board.render
+  end
+
+  def test_board_render_miss
+    board = Board.new
+    ship = Ship.new("Cruiser", 3)
+    cell = Cell.new("A1")
+    board.place(ship, ["A1", "A2", "A3"])
+    board.cells["B1"].fire_upon
+
+    miss_board = "  1 2 3 4 \n" +
+                  "A  . . . . \n" +
+                  "B  M . . . \n" +
+                  "C  . . . . \n" +
+                  "D  . . . . \n"
+
+    assert_equal  miss_board, board.render
+  end
+
+  def test_board_render_sunk
+    board = Board.new
+    ship = Ship.new("Cruiser", 3)
+    cell = Cell.new("A1")
+    board.place(ship, ["A1", "A2", "A3"])
+    board.cells["A1"].fire_upon
+    board.cells["A2"].fire_upon
+    board.cells["A3"].fire_upon
+
+    sunk_board = "  1 2 3 4 \n" +
+                  "A  X X X . \n" +
+                  "B  . . . . \n" +
+                  "C  . . . . \n" +
+                  "D  . . . . \n"
+
+    assert_equal  sunk_board, board.render
+  end
+
+  def test_board_render_show_ship
+    board = Board.new
+
+    show_ship_board = "  1 2 3 4 \n" +
+                  "A  . . . . \n" +
+                  "B  . . . . \n" +
+                  "C  . . . . \n" +
+                  "D  . . . . \n"
+
+    #assert_equal  show_ship_board, board.render
+  end
+
+  def test_render_cell_values
+    board = Board.new
+    expected_cell_values = [[".", ".", ".", "."], [".", ".", ".", "."],
+    [".", ".", ".", "."], [".", ".", ".", "."]]
+
+    assert_equal expected_cell_values, board.render_cell_values
+  end
+
+  def test_convert_cell_values_to_string
+    board = Board.new
+    expected_cell_values = [". . . . \n",
+                            ". . . . \n",
+                            ". . . . \n",
+                            ". . . . \n"]
+
+    assert_equal expected_cell_values, board.convert_cell_values_to_string
+    assert_instance_of String, board.convert_cell_values_to_string[0]
   end
 end
