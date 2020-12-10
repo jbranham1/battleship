@@ -65,4 +65,23 @@ class Board
       end
     end
   end
+
+  def render
+    board_values = convert_cell_values_to_string
+    "  1 2 3 4 \n" +
+    "A  #{board_values[0]}" +
+    "B  #{board_values[1]}" +
+    "C  #{board_values[2]}" +
+    "D  #{board_values[3]}"
+  end
+
+  def convert_cell_values_to_string
+    render_cell_values.map {|value| "#{value.join(" ")} \n"}
+  end
+
+  def render_cell_values
+    @cells.values.map do |cell|
+      cell.render
+    end.each_slice(4).to_a
+  end
 end

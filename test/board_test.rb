@@ -134,4 +134,23 @@ class BoardTest < MiniTest::Test
 
     assert_equal  empty_board, board.render
   end
+
+  def test_render_cell_values
+    board = Board.new
+    expected_cell_values = [[".", ".", ".", "."], [".", ".", ".", "."],
+    [".", ".", ".", "."], [".", ".", ".", "."]]
+
+    assert_equal expected_cell_values, board.render_cell_values
+  end
+
+  def test_convert_cell_values_to_string
+    board = Board.new
+    expected_cell_values = [". . . . \n",
+                            ". . . . \n",
+                            ". . . . \n",
+                            ". . . . \n"]
+
+    assert_equal expected_cell_values, board.convert_cell_values_to_string
+    assert_instance_of String, board.convert_cell_values_to_string[0]
+  end
 end
