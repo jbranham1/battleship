@@ -15,26 +15,24 @@ class BoardSetupTest < MiniTest::Test
 
   def test_it_has_readable_attributes
     board_setup = BoardSetup.new
-    board = Board.new
 
     assert_equal Board.new.render, board_setup.board.render
   end
 
-  def test_if_computer_can_place_ships
-    skip
+  def test_if_computer_can_place_ship_cruiser
     board_setup = BoardSetup.new
-    board_setup.computer_place_ship_cruiser
+    test = board_setup.computer_place_ship_cruiser
     expect = 1
 
-    assert_equal expect, board_setup.board.render
+    assert_equal expect, test
   end
 
-  def test_if_computer_can_select_random_cells
-    skip
+  def test_if_computer_can_select_cells
     board_setup = BoardSetup.new
-    board = Board.new
+    random_cells = ["C2", "D4", "A1"]
 
-    assert_equal @board.cells.keys.sample, board_setup.computer_select_cell
+    assert_equal random_cells.length, board_setup.computer_select_cells_cruiser.length
+
   end
 
 end
