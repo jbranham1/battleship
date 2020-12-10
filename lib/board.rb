@@ -29,22 +29,40 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    @letters = (coordinates[0][0]..coordinates[-1][0]).to_a
-    @numbers = (coordinates[0][1]..coordinates[-1][1]).to_a
-    if ship.length == coordinates.length
+    if ship.length == coordinates.length &&
+      coordinates.all? {|coordinate| valid_coordinate?(coordinate)} &&
+      coordinates.all? {|coordinate| @cells[coordinate].empty?}
       consecutive?(coordinates)
     else
       false
     end
   end
 
+  def set_letters(coordinates)
+    (coordinates[0][0]..coordinates[-1][0]).to_a
+  end
+
+  def set_numbers(coordinates)
+    (coordinates[0][1]..coordinates[-1][1]).to_a
+  end
+
   def consecutive?(coordinates)
-    if @letters.all?(coordinates[0][0])
-      @numbers.size == coordinates.size
-    elsif @numbers.all?(coordinates[0][1])
-      @letters.size == coordinates.size
+    letters = set_letters(coordinates)
+    numbers = set_numbers(coordinates)
+    if letters.all?(coordinates[0][0])
+      numbers.size == coordinates.size
+    elsif numbers.all?(coordinates[0][1])
+      letters.size == coordinates.size
     else
       false
+    end
+  end
+
+  def place(ship, coordinates)
+    if valid_placement?(ship, coordinates)
+      coordinates.each do |coordinate|
+        @cells[coordinate].place_ship(ship)
+      end
     end
   end
 end
