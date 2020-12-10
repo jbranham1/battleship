@@ -1,5 +1,7 @@
+require "./lib/game_message"
 puts "Welcome to BATTLESHIP"
 
+message = GameMessage.new
 loop do
   puts "Enter p to play. Enter q to quit."
   answer = gets.chomp.upcase
