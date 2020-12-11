@@ -24,11 +24,12 @@ class BoardSetupTest < MiniTest::Test
     board_setup = BoardSetup.new
     cruiser = Ship.new("Cruiser", 3)
     board_setup.computer_place_ship(cruiser)
+
     test = board_setup.board.cells.values.select do |cell|
       cell.render(true) == "S"
     end
 
-    assert_equal 3, test.count
+    assert_equal 3, test.count 
   end
 
   def test_if_computer_can_select_cells

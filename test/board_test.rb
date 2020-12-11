@@ -58,6 +58,7 @@ class BoardTest < MiniTest::Test
     cruiser = Ship.new("Cruiser", 3)
 
     assert_equal false, board.valid_placement?(cruiser, ["A1", "B2", "C3"])
+    assert_equal false, board.valid_placement?(cruiser, ["B3", "C1", "D1"])
   end
 
   def test_valid_placement_unordered
