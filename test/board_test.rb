@@ -124,6 +124,21 @@ class BoardTest < MiniTest::Test
     assert_equal cruiser, cell_3.ship
   end
 
+  def test_place_ship_invalid_placement
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+
+    board.place(cruiser, ["A1", "A2", "A4"])
+    cell_1 = board.cells["A1"]
+    cell_2 = board.cells["A2"]
+    cell_3 = board.cells["A3"]
+
+    assert_nil cell_1.ship
+    assert_nil cell_2.ship
+    assert_nil cell_3.ship
+  end
+
+
   def test_place_overlapping_ships
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
