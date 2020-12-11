@@ -19,23 +19,27 @@ class BoardSetupTest < MiniTest::Test
     assert_equal Board.new.render, board_setup.board.render
   end
 
-  def test_if_computer_can_place_ship_cruiser
-    skip
+  def test_if_computer_can_place_ship
     board_setup = BoardSetup.new
-    test = board_setup.computer_place_ship_cruiser
-    expect = board_setup.board.render
+    cruiser = Ship.new("Cruiser", 3)
+    board_setup.computer_place_ship(cruiser)
+    test = board_setup.board.cells.values.select do |cell|
+      cell.render == "S"
+    end
 
-    assert_equal expect, test
+    assert_equal 3, test
   end
 
   def test_if_computer_can_select_cells
+    skip
     board_setup = BoardSetup.new
     random_cells = ["C2", "D4", "A1"]
 
-    assert_equal random_cells.length, board_setup.computer_select_cells_cruiser.length
+    assert_equal random_cells.length, board_setup.computer_select_cells.length
   end
 
   def test_if_computer_can_select_cell2
+    skip
     board_setup = BoardSetup.new
     test = board_setup.computer_select_space1
 
