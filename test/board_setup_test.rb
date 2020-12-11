@@ -4,6 +4,7 @@ require './lib/board'
 require './lib/cell'
 require './lib/ship'
 require './lib/board_setup'
+require './lib/game_message'
 require 'pry'
 
 class BoardSetupTest < MiniTest::Test
@@ -29,7 +30,22 @@ class BoardSetupTest < MiniTest::Test
       cell.render(true) == "S"
     end
 
-    assert_equal 3, test.count 
+    assert_equal 3, test.count
+  end
+
+  def test_if_computer_can_place_multiple_ships
+    board_setup = BoardSetup.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    board_setup.computer_place_ship(cruiser)
+    board_setup.computer_place_ship(submarine)
+
+    test = board_setup.board.cells.values.select do |cell|
+      cell.render(true) == "S"
+    end
+
+    assert_equal 5, test.count
+    # assert_equal "TEST BOARD", board_setup.board.render(true) #Uncomment this line to see ship placement.
   end
 
   def test_if_computer_can_select_cells
@@ -43,11 +59,18 @@ class BoardSetupTest < MiniTest::Test
     assert_equal random_sub.length, board_setup.computer_select_cells(submarine.length).length
   end
 
-  def test_if_computer_can_select_cell2
-    skip
+  def test_if_player_can_place_ship_valid
     board_setup = BoardSetup.new
-    test = board_setup.computer_select_space1
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    board_setup.player_place_ship(cruiser, ["A1", "A2", "A3"])
 
-    assert_equal test, board_setup.computer_select_space2
+    test = board_setup.board.cells.values.select do |cell|
+      cell.render(true) == "S"
+    end
+
+    assert_equal 3, test.count
+    # assert_equal "TEST BOARD", board_setup.board.render(true) #Uncomment this line to see ship placement.
   end
+
 end
