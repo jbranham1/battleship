@@ -47,7 +47,7 @@ class Board
   end
 
   def numbers(coordinates)
-    (coordinates[0][1]..coordinates[-1][1]).to_a
+    (coordinates[0][1]..coordinates[-1][1]).to_a.sort
   end
 
   def consecutive?(coordinates)
