@@ -17,6 +17,7 @@ class BoardSetupTest < MiniTest::Test
     board_setup = BoardSetup.new
 
     assert_equal Board.new.render, board_setup.board.render
+    assert_instance_of Ship, board_setup.computer_cruiser
   end
 
   def test_if_computer_can_place_ship
@@ -24,18 +25,21 @@ class BoardSetupTest < MiniTest::Test
     cruiser = Ship.new("Cruiser", 3)
     board_setup.computer_place_ship(cruiser)
     test = board_setup.board.cells.values.select do |cell|
-      cell.render == "S"
+      cell.render(true) == "S"
     end
 
-    assert_equal 3, test
+    assert_equal 3, test.count
   end
 
   def test_if_computer_can_select_cells
-    skip
     board_setup = BoardSetup.new
-    random_cells = ["C2", "D4", "A1"]
+    random_cruiser = ["C2", "D4", "A1"]
+    random_sub = ["B2", "B3"]
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
 
-    assert_equal random_cells.length, board_setup.computer_select_cells.length
+    assert_equal random_cruiser.length, board_setup.computer_select_cells(cruiser.health).length
+    assert_equal random_sub.length, board_setup.computer_select_cells(submarine.length).length
   end
 
   def test_if_computer_can_select_cell2

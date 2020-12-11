@@ -2,17 +2,26 @@ require './lib/board'
 require './lib/ship'
 
 class BoardSetup
-  attr_reader :board
+  attr_reader :board,
+              :computer_cruiser,
+              :computer_sub,
+              :player_cruiser,
+              :player_sub
   #this class should house setting up the board. Meaning placing boats.
   #Iteration 4 = adding board dimensions
 
   def initialize
     @board = Board.new
+    @computer_cruiser = Ship.new("Cruiser", 3)
+    @computer_sub = Ship.new("Submarine", 2)
+    @player_cruiser = Ship.new("Cruiser", 3)
+    @player_sub = Ship.new("Submarine", 2)
+
   end
 
-  def computer_select_cells_cruiser
+  def computer_select_cells(length)
     randomized_cells = @board.cells.keys.shuffle
-    spaces = randomized_cells.shift(3)
+    spaces = randomized_cells.shift(length)
   end
 
   def computer_select_cells_submarine
@@ -23,17 +32,11 @@ class BoardSetup
 
   def computer_place_ship(ship)
     loop do
-      coordinates = computer_select_cells_cruiser
+      coordinates = computer_select_cells(ship.length)
       if !@board.place(ship, coordinates).nil?
         break
       end
-      coordinates
     end
-  end
-
-  def create_computer_ships
-    cruiser = Ship.new("Cruiser", 3)
-    submarine = Ship.new("Submarine", 2)
   end
   #
   # def computer_select_space1
