@@ -68,7 +68,8 @@ class Board
     end
   end
 
-  def render
+  def render(show_ship = false)
+    @show_ship = show_ship
     board_values = convert_cell_values_to_string
     "  1 2 3 4 \n" +
     "A  #{board_values[0]}" +
@@ -83,7 +84,7 @@ class Board
 
   def render_cell_values
     @cells.values.map do |cell|
-      cell.render
+      cell.render(@show_ship)
     end.each_slice(4).to_a
   end
 end
