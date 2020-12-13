@@ -51,16 +51,22 @@ class Game
   end
 
   def take_turn
-    @game_message.show_boards(@computer_board.board, @player_board.board)
-    player_shot
+    while !game_over?
+      @game_message.show_boards(@computer_board.board, @player_board.board)
+      player_shot
+      computer_shot
+      @game_message.player_results(@player_coordinate, @computer_board.board.cells[@player_coordinate].render)
+      @game_message.computer_results(@computer_coordinate, @player_board.board.cells[@computer_coordinate].render)
+    end
+    @game_message.end_game_result(game_winner)
   end
 
   def player_shot
     @game_message.enter_shot
     loop do
-      player_coordinate = gets.chomp.upcase
-      if @player_board.board.valid_coordinate?(player_coordinate) &&
-        analyze_shot(player_coordinate)
+      @player_coordinate = gets.chomp.upcase
+      if @computer_board.board.valid_coordinate?(@player_coordinate) &&
+        player_analyze_shot(@player_coordinate)
         break
       else
         @game_message.invalid_input_for_shot
@@ -68,7 +74,7 @@ class Game
     end
   end
 
-  def analyze_shot(coordinate)
+  def player_analyze_shot(coordinate)
     if @computer_board.board.cells[coordinate].fired_upon?
       @game_message.already_fired_on
       false
@@ -77,4 +83,29 @@ class Game
       true
     end
   end
+
+  def computer_shot
+    loop do
+      @computer_coordinate = @player_board.board.cells.keys.shuffle.shift
+      if @player_board.board.valid_coordinate?(@computer_coordinate) &&
+        !@player_board.board.cells[@computer_coordinate].fired_upon?
+        @player_board.board.cells[@computer_coordinate].fire_upon
+        break
+      end
+    end
+  end
+
+  def game_over?
+    (@computer_cruiser.sunk? && @computer_sub.sunk?) || (@player_cruiser.sunk? && @player_sub.sunk?)
+  end
+
+  def game_winner
+    if @computer_cruiser.sunk? && @computer_sub.sunk?
+      :player
+    elsif @player_cruiser.sunk? && @player_sub.sunk?
+      :computer
+    end
+  end
+
+
 end

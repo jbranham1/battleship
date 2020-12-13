@@ -43,6 +43,7 @@ class GameMessage
   end
 
   def computer_results(coordinate, render_value)
+    result = get_render_result(render_value)
     puts "My shot on #{coordinate} was a #{result}."
   end
 
