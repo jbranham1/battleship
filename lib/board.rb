@@ -47,7 +47,10 @@ class Board
   end
 
   def numbers(coordinates)
-    (coordinates[0][1]..coordinates[-1][1]).to_a
+    num = coordinates.map do |coordinate|
+      coordinate[1]
+    end.sort
+    (num[0]..num[-1]).to_a
   end
 
   def consecutive?(coordinates)
