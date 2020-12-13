@@ -19,6 +19,7 @@ class GameMessage
   end
 
   def show_boards(computer_board, player_board)
+    puts "========================================"
     puts "=============COMPUTER BOARD============="
     puts computer_board.render
     puts "==============PLAYER BOARD=============="

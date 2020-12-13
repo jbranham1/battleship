@@ -1,6 +1,6 @@
 require "./lib/board_setup"
-require './lib/game_message'
-require 'pry'
+require "./lib/game_message"
+
 class Game
   attr_reader :game_message,
               :computer_board,
@@ -29,8 +29,8 @@ class Game
   end
 
   def computer_place_ships
-    @board_setup.computer_place_ship(computer_board,computer_cruiser)
-    @board_setup.computer_place_ship(computer_board,computer_sub)
+    @board_setup.computer_place_ship(computer_board, computer_cruiser)
+    @board_setup.computer_place_ship(computer_board, computer_sub)
   end
 
   def player_place_ships
@@ -66,7 +66,7 @@ class Game
     @game_message.enter_shot
     loop do
       @player_coordinate = gets.chomp.upcase
-      if @board_setup.board.valid_coordinate?(player_board, @player_coordinate) &&
+      if @computer_board.valid_coordinate?(@player_coordinate) &&
         player_analyze_shot(@player_coordinate)
         break
       else
