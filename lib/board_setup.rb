@@ -27,12 +27,6 @@ class BoardSetup
     spaces = randomized_cells.shift(length)
   end
 
-  def computer_select_cells_submarine
-    randomized_cells = @board.cells.keys.shuffle
-    randomized_cells.shift(2)
-  end
-
-
   def computer_place_ship(ship)
     loop do
       coordinates = computer_select_cells(ship.length)
