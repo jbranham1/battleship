@@ -15,7 +15,7 @@ class GameMessage
   end
 
   def player_board_placement(player_board)
-    player_board.render
+    puts player_board.render(true)
   end
 
   def show_boards(computer_board, player_board)
