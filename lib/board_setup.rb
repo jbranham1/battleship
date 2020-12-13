@@ -8,7 +8,6 @@ class BoardSetup
   end
 
   def computer_place_ship(board, ship)
-    @board = board
     loop do
       coordinates = computer_select_cells(board, ship.length)
       if !board.place(ship, coordinates).nil?
