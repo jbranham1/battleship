@@ -18,7 +18,6 @@ class BoardSetupTest < MiniTest::Test
     board_setup = BoardSetup.new
 
     assert_equal Board.new.render, board_setup.board.render
-    assert_instance_of Ship, board_setup.computer_cruiser
   end
 
   def test_if_computer_can_place_ship

@@ -15,14 +15,14 @@ class GameMessage
   end
 
   def player_board_placement(player_board)
-    player_board.render
+    puts player_board.render(true)
   end
 
   def show_boards(computer_board, player_board)
     puts "=============COMPUTER BOARD============="
-    computer_board.render
+    puts computer_board.render
     puts "==============PLAYER BOARD=============="
-    player_board.render(true)
+    puts player_board.render(true)
   end
 
   def enter_shot
@@ -43,6 +43,7 @@ class GameMessage
   end
 
   def computer_results(coordinate, render_value)
+    result = get_render_result(render_value)
     puts "My shot on #{coordinate} was a #{result}."
   end
 
