@@ -20,9 +20,9 @@ class GameMessage
 
   def show_boards(computer_board, player_board)
     puts "=============COMPUTER BOARD============="
-    computer_board.render
+    puts computer_board.render
     puts "==============PLAYER BOARD=============="
-    player_board.render(true)
+    puts player_board.render(true)
   end
 
   def enter_shot
