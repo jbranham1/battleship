@@ -1,16 +1,13 @@
 require './lib/board'
 require './lib/ship'
-require './lib/game_message'
 
 class BoardSetup
-  attr_reader :board,
-              :game_message
+  attr_reader :board
   #this class should house setting up the board. Meaning placing boats.
   #Iteration 4 = adding board dimensions
 
   def initialize
     @board = Board.new
-    @game_message = GameMessage.new
   end
 
   def computer_select_cells(length)
