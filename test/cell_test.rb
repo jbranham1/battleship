@@ -107,4 +107,28 @@ class CellTest < MiniTest::Test
 
     assert_equal "S", cell.render(true)
   end
+
+  def test_render_has_optional_argument_and_hit
+    ship = Ship.new("Cruiser", 3)
+    cell = Cell.new("B4")
+
+    assert_equal ".", cell.render(true)
+    cell.place_ship(ship)
+    cell.fire_upon
+
+    assert_equal "H", cell.render(true)
+  end
+
+  def test_render_has_optional_argument_and_sunk
+    ship = Ship.new("Cruiser", 3)
+    cell = Cell.new("B4")
+    cell.place_ship(ship)
+    cell.fire_upon
+    2.times do
+      ship.hit
+    end
+
+    assert_equal true, ship.sunk?
+    assert_equal "X", cell.render(true)
+  end
 end
