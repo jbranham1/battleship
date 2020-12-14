@@ -103,13 +103,21 @@ class Game
     (@computer_cruiser.sunk? && @computer_sub.sunk?) || (@player_cruiser.sunk? && @player_sub.sunk?)
   end
 
+  def computer_ships_sunk?
+    @computer_cruiser.sunk? && @computer_sub.sunk?
+  end
+
+  def player_ships_sunk?
+    @player_cruiser.sunk? && @player_sub.sunk?
+  end
+
   def game_winner
-    if @computer_cruiser.sunk? && @computer_sub.sunk?
+    if computer_ships_sunk? && player_ships_sunk?
+      "Tie"
+    elsif computer_ships_sunk?
       :player
-    elsif @player_cruiser.sunk? && @player_sub.sunk?
+    elsif player_ships_sunk?
       :computer
     end
   end
-
-
-end
+end 
