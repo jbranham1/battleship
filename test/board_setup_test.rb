@@ -15,12 +15,6 @@ class BoardSetupTest < MiniTest::Test
     assert_instance_of BoardSetup, board_setup
   end
 
-  # def test_it_has_readable_attributes
-  #   board_setup = BoardSetup.new
-  #
-  #   assert_equal Board.new.render, board_setup.board.render
-  # end
-
   def test_if_computer_can_place_ship
     board_setup = BoardSetup.new
     board = Board.new

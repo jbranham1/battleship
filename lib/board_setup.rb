@@ -1,6 +1,3 @@
-require './lib/board'
-require './lib/ship'
-
 class BoardSetup
   def computer_select_cells(board,length)
     randomized_cells = board.cells.keys.shuffle

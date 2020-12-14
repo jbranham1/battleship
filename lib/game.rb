@@ -1,10 +1,13 @@
 require "./lib/board_setup"
 require "./lib/game_message"
+require "./lib/board"
+require "./lib/ship"
 
 class Game
   attr_reader :game_message,
               :computer_board,
               :player_board,
+              :board_setup,
               :computer_cruiser,
               :computer_sub,
               :player_cruiser,
