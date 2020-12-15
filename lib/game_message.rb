@@ -1,12 +1,15 @@
 class GameMessage
   def computer_board_placement(computer_board)
     puts "I have laid out my ships on the grid."
+    sleep(1)
     puts "You now need to lay out your two ships."
+    sleep(1)
     puts "The Cruiser is three units long and the Submarine is two units long."
     computer_board.render
   end
 
   def player_ship_placement(ship_name, ship_length)
+    sleep(1)
     puts "Enter the squares for the #{ship_name} (#{ship_length} spaces):"
   end
 
@@ -19,10 +22,12 @@ class GameMessage
   end
 
   def show_boards(computer_board, player_board)
+    puts "========================================"
     puts "=============COMPUTER BOARD============="
     puts computer_board.render
     puts "==============PLAYER BOARD=============="
     puts player_board.render(true)
+    sleep(1)
   end
 
   def enter_shot
@@ -60,8 +65,10 @@ class GameMessage
   def end_game_result(winner)
     if winner == :player
       puts "You won!"
-    else
+    elsif winner == :computer
       puts "I won!"
+    else
+      "It's a tie, how boring! Goodbye."
     end
   end
 end

@@ -5,6 +5,7 @@ puts "Welcome to BATTLESHIP"
 
 message = GameMessage.new
 loop do
+  puts "---------------------------------"
   puts "Enter p to play. Enter q to quit."
   answer = gets.chomp.upcase
   if answer == "P"

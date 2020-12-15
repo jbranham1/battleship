@@ -1,33 +1,19 @@
-require './lib/board'
-require './lib/ship'
-require './lib/game_message'
-
 class BoardSetup
-  attr_reader :board,
-              :game_message
-  #this class should house setting up the board. Meaning placing boats.
-  #Iteration 4 = adding board dimensions
-
-  def initialize
-    @board = Board.new
-    @game_message = GameMessage.new
-  end
-
-  def computer_select_cells(length)
-    randomized_cells = @board.cells.keys.shuffle
+  def computer_select_cells(board,length)
+    randomized_cells = board.cells.keys.shuffle
     spaces = randomized_cells.shift(length)
   end
 
-  def computer_place_ship(ship)
+  def computer_place_ship(board, ship)
     loop do
-      coordinates = computer_select_cells(ship.length)
-      if !@board.place(ship, coordinates).nil?
+      coordinates = computer_select_cells(board, ship.length)
+      if !board.place(ship, coordinates).nil?
         break
       end
     end
   end
 
-  def player_place_ship(ship, coordinates)
-      @board.place(ship, coordinates)
+  def player_place_ship(board, ship, coordinates)
+    board.place(ship, coordinates)
   end
 end
