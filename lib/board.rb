@@ -2,35 +2,38 @@ require "./lib/cell"
 
 class Board
   attr_reader :cells,
-              :user_input_cells
+              :user_input_cells,
+              :num_input
 
-  def initialize
-    @cells = {
-      "A1" => Cell.new("A1"),
-      "A2" => Cell.new("A2"),
-      "A3" => Cell.new("A3"),
-      "A4" => Cell.new("A4"),
-      "B1" => Cell.new("B1"),
-      "B2" => Cell.new("B2"),
-      "B3" => Cell.new("B3"),
-      "B4" => Cell.new("B4"),
-      "C1" => Cell.new("C1"),
-      "C2" => Cell.new("C2"),
-      "C3" => Cell.new("C3"),
-      "C4" => Cell.new("C4"),
-      "D1" => Cell.new("D1"),
-      "D2" => Cell.new("D2"),
-      "D3" => Cell.new("D3"),
-      "D4" => Cell.new("D4")
-    }
-    @user_input_cells = {}
+  def initialize(num_input)
+    @num_input = num_input
+    @cells = add_cells(num_input)
+      # "A1" => Cell.new("A1"),
+      # "A2" => Cell.new("A2"),
+      # "A3" => Cell.new("A3"),
+      # "A4" => Cell.new("A4"),
+      # "B1" => Cell.new("B1"),
+      # "B2" => Cell.new("B2"),
+      # "B3" => Cell.new("B3"),
+      # "B4" => Cell.new("B4"),
+      # "C1" => Cell.new("C1"),
+      # "C2" => Cell.new("C2"),
+      # "C3" => Cell.new("C3"),
+      # "C4" => Cell.new("C4"),
+      # "D1" => Cell.new("D1"),
+      # "D2" => Cell.new("D2"),
+      # "D3" => Cell.new("D3"),
+      # "D4" => Cell.new("D4")
+
+    # @user_input_cells = {}
   end
 
   def add_cells(num_input)
+    @cells = {}
     add_keys(num_input).each do |key|
-      @user_input_cells[key] = Cell.new(key)
+      @cells[key] = Cell.new(key)
     end
-    @user_input_cells
+    @cells
   end
 
   def add_keys(num_input)
@@ -101,39 +104,19 @@ class Board
     end
   end
 
-  def render(show_ship = false)
-    @show_ship = show_ship
-    board_values = convert_cell_values_to_string
-    "  1 2 3 4 \n" +
-    "A  #{board_values[0]}" +
-    "B  #{board_values[1]}" +
-    "C  #{board_values[2]}" +
-    "D  #{board_values[3]}"
-  end
-
-  def convert_cell_values_to_string
-    render_cell_values.map {|value| "#{value.join(" ")} \n"}
-  end
-
-  def render_cell_values
+  def render_cell_values(num_input)
     @cells.values.map do |cell|
-      cell.render(@show_ship)
-    end.each_slice(4).to_a
-  end
-
-  def render_user_input_cell_values(num_input)
-    @user_input_cells.values.map do |cell|
       cell.render(@show_ship)
     end.each_slice(num_input).to_a
   end
 
-  def convert_user_input_cell_values_to_string(num_input)
-    render_user_input_cell_values(num_input).map {|value| "#{value.join("  ")} \n"}
+  def convert_cell_values_to_string
+    render_cell_values(num_input).map {|value| "#{value.join("  ")} \n"}
   end
 
-  def render_user_cells(num_input, show_ship = false)
+  def render(show_ship = false)
     @show_ship = show_ship
-    board_values = convert_user_input_cell_values_to_string(num_input)
+    board_values = convert_cell_values_to_string
     num = 1
     board_string = build_render_header(num_input)
 
@@ -142,9 +125,6 @@ class Board
       num += 1
     end
     board_string
-    # "B  #{board_values[1]}" +
-    # "C  #{board_values[2]}" +
-    # "D  #{board_values[3]}"
   end
 
   def build_render_header(num_input)
