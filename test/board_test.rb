@@ -12,7 +12,15 @@ class BoardTest < MiniTest::Test
     assert_instance_of Board, board
   end
 
-  def test_it_has_readable_attributes
+  def test_it_has_readable_attributes_default
+    board = Board.new
+
+    assert_equal 16, board.cells.count
+    assert_equal Hash, board.cells.class
+    assert_equal 4, board.num_input
+  end
+
+  def test_it_has_readable_attributes_for_input
     board = Board.new(10)
 
     assert_equal 100, board.cells.count
@@ -260,7 +268,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_render_cell_values
-    board = Board.new(4)
+    board = Board.new
     expected_cell_values = [[".", ".", ".", "."], [".", ".", ".", "."],
     [".", ".", ".", "."], [".", ".", ".", "."]]
 
