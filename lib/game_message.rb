@@ -1,11 +1,10 @@
 class GameMessage
-  def computer_board_placement(computer_board)
+  def computer_board_placement
     puts "I have laid out my ships on the grid."
     sleep(1)
     puts "You now need to lay out your two ships."
     sleep(1)
     puts "The Cruiser is three units long and the Submarine is two units long."
-    computer_board.render
   end
 
   def player_ship_placement(ship_name, ship_length)
