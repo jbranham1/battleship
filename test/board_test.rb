@@ -20,6 +20,29 @@ class BoardTest < MiniTest::Test
     assert_equal Cell, board.cells.values[1].class
   end
 
+  def test_user_input_add_cells
+    skip
+    board = Board.new
+
+    assert_equal 1, board.add_cells(10)
+  end
+
+  def test_user_input_cell_values
+    skip
+    board = Board.new
+    board.add_cells(10)
+
+    assert_equal 1, board.render_user_input_cell_values(10)
+  end
+
+  def test_render_user_cells
+    board = Board.new
+    board.add_cells(27)
+
+    assert_equal 1, board.render_user_cells(27)
+  end
+
+
   def test_valid_coordinate?
     board = Board.new
 
