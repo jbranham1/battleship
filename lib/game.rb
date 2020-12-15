@@ -5,13 +5,13 @@ require "./lib/ship"
 
 class Game
   attr_reader :game_message,
-              :computer_board,
-              :player_board,
-              :board_setup,
-              :computer_cruiser,
-              :computer_sub,
-              :player_cruiser,
-              :player_sub
+            :computer_board,
+            :player_board,
+            :board_setup,
+            :computer_cruiser,
+            :computer_sub,
+            :player_cruiser,
+            :player_sub
 
   def initialize
     @game_message = GameMessage.new
@@ -26,7 +26,8 @@ class Game
 
   def game_start
     computer_place_ships
-    @game_message.computer_board_placement(@computer_board)
+    @game_message.computer_board_placement
+    @game_message.player_board_placement(@player_board)
     player_place_ships
     take_turn
   end
@@ -120,4 +121,4 @@ class Game
       :computer
     end
   end
-end 
+end

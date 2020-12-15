@@ -18,10 +18,9 @@ class ShipTest < MiniTest::Test
   def test_if_ship_has_sunk?
     ship = Ship.new('Cruiser', 3)
     assert_equal false, ship.sunk?
-
-    ship.hit
-    ship.hit
-    ship.hit
+    3.times do
+      ship.hit
+    end
     assert_equal true, ship.sunk?
   end
 
