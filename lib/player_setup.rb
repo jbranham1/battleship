@@ -2,9 +2,10 @@ require "./lib/game_message"
 require "./lib/ship"
 
 class PlayerSetup
-  attr_reader :ships
+  attr_reader :player_ships
+
   def initialize
-    @ships = []
+    @player_ships = []
     @game_message = GameMessage.new
     @board_cells_count = 0
   end
@@ -12,13 +13,13 @@ class PlayerSetup
   def get_ships(board_length)
     @game_message.player_ships
     loop do
-      @ships << Ship.new(get_name, get_length(board_length))
+      @player_ships << Ship.new(get_name, get_length(board_length))
       puts "Ship added. Would you like to add another? Yes/No"
       if !add_another?
         break
       else
         if @board_cells_count == (board_length * board_length) ||
-          @ships.count == 4
+          @player_ships.count == 4
           puts "Cannot enter any more ships."
           break
         end
@@ -62,5 +63,11 @@ class PlayerSetup
       end
     end
     @length
+  end
+
+  def generate_computer_ships
+    @player_ships.map do |ship|
+      Ship.new(ship.name, ship.length)
+    end
   end
 end
