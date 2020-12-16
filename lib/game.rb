@@ -2,34 +2,32 @@ require "./lib/board_setup"
 require "./lib/game_message"
 require "./lib/board"
 require "./lib/ship"
+require "./lib/player_setup"
 
 class Game
-  attr_reader :game_message,
-            :computer_board,
-            :player_board,
-            :board_setup,
-            :computer_cruiser,
-            :computer_sub,
-            :player_cruiser,
-            :player_sub
-
   def initialize
     @game_message = GameMessage.new
-    @computer_board = Board.new
-    @player_board = Board.new
     @board_setup = BoardSetup.new
     @computer_cruiser = Ship.new("Cruiser", 3)
     @computer_sub = Ship.new("Submarine", 2)
-    @player_cruiser = Ship.new("Cruiser", 3)
-    @player_sub = Ship.new("Submarine", 2)
+    @player_setup = PlayerSetup.new
   end
 
   def game_start
+    setup
     computer_place_ships
     @game_message.computer_board_placement
     @game_message.player_board_placement(@player_board)
     player_place_ships
     take_turn
+  end
+
+  def setup
+    board_length = @game_message.get_board_size
+    @player_setup.get_ships(board_length)
+    @player_ships = @player_setup.ships
+    @computer_board = Board.new(board_length)
+    @player_board = Board.new(board_length)
   end
 
   def computer_place_ships
@@ -38,8 +36,9 @@ class Game
   end
 
   def player_place_ships
-    player_valid_entry(@player_cruiser)
-    player_valid_entry(@player_sub)
+    @player_ships.each do |ship|
+      player_valid_entry(ship)
+    end
   end
 
   def player_valid_entry(ship)
@@ -101,7 +100,7 @@ class Game
   end
 
   def game_over?
-    (@computer_cruiser.sunk? && @computer_sub.sunk?) || (@player_cruiser.sunk? && @player_sub.sunk?)
+    computer_ships_sunk? || player_ships_sunk?
   end
 
   def computer_ships_sunk?
@@ -109,7 +108,9 @@ class Game
   end
 
   def player_ships_sunk?
-    @player_cruiser.sunk? && @player_sub.sunk?
+    @player_ships.all? do |ship|
+      ship.sunk?
+    end
   end
 
   def game_winner
