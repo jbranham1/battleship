@@ -6,6 +6,7 @@ class PlayerSetup
   def initialize
     @ships = []
     @game_message = GameMessage.new
+    @board_cells_count = 0
   end
 
   def get_ships(board_length)
@@ -15,8 +16,16 @@ class PlayerSetup
       puts "Ship added. Would you like to add another? Yes/No"
       if !add_another?
         break
+      else
+        if @board_cells_count == (board_length * board_length) ||
+          @ships.count == 4
+          puts "Cannot enter any more ships."
+          break
+        end
       end
     end
+    puts "Let's play!"
+    puts "==============================="
   end
 
   def add_another?
@@ -48,6 +57,7 @@ class PlayerSetup
       if @length < 1 || @length > board_length
         puts "Length must be a number between 1 and #{board_length}"
       else
+        @board_cells_count += @length
         break
       end
     end
