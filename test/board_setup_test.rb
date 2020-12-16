@@ -55,19 +55,4 @@ class BoardSetupTest < MiniTest::Test
     assert_equal random_cruiser.length, cruiser_cells.length
     assert_equal random_sub.length, submarine_cells.length
   end
-
-  def test_if_player_can_place_ship_valid
-    board_setup = BoardSetup.new
-    board = Board.new
-    cruiser = Ship.new("Cruiser", 3)
-    submarine = Ship.new("Submarine", 2)
-    board_setup.player_place_ship(board, cruiser, ["A1", "A2", "A3"])
-
-    test = board.cells.values.select do |cell|
-      cell.render(true) == "S"
-    end
-
-    assert_equal 3, test.count
-  end
-
 end

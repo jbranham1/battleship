@@ -9,8 +9,6 @@ class Game
   def initialize
     @game_message = GameMessage.new
     @board_setup = BoardSetup.new
-    @computer_cruiser = Ship.new("Cruiser", 3)
-    @computer_sub = Ship.new("Submarine", 2)
     @player_setup = PlayerSetup.new
     @turn = Turn.new
   end
@@ -27,14 +25,16 @@ class Game
   def setup
     board_length = @game_message.get_board_size
     @player_setup.get_ships(board_length)
-    @player_ships = @player_setup.ships
+    @player_ships = @player_setup.player_ships
+    @computer_ships = @player_setup.generate_computer_ships
     @computer_board = Board.new(board_length)
     @player_board = Board.new(board_length)
   end
 
   def computer_place_ships
-    @board_setup.computer_place_ship(@computer_board, @computer_cruiser)
-    @board_setup.computer_place_ship(@computer_board, @computer_sub)
+    @computer_ships.each do |ship|
+      @board_setup.computer_place_ship(@computer_board, ship)
+    end
   end
 
   def player_place_ships
@@ -70,7 +70,9 @@ class Game
   end
 
   def computer_ships_sunk?
-    @computer_cruiser.sunk? && @computer_sub.sunk?
+    @computer_ships.all? do |ship|
+      ship.sunk?
+    end
   end
 
   def player_ships_sunk?
