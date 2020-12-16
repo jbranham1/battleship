@@ -2,6 +2,7 @@ require "./lib/board_setup"
 require "./lib/game_message"
 require "./lib/board"
 require "./lib/ship"
+require "./lib/turn"
 require "./lib/player_setup"
 
 class Game
@@ -11,6 +12,7 @@ class Game
     @computer_cruiser = Ship.new("Cruiser", 3)
     @computer_sub = Ship.new("Submarine", 2)
     @player_setup = PlayerSetup.new
+    @turn = Turn.new
   end
 
   def game_start
@@ -58,48 +60,14 @@ class Game
   def take_turn
     while !game_over?
       @game_message.show_boards(@computer_board, @player_board)
-      player_shot
-      computer_shot
+      @player_coordinate = @turn.player_shot(@computer_board)
+      @computer_coordinate = @turn.computer_shot(@player_board)
       @game_message.player_results(@player_coordinate,
         @computer_board.cells[@player_coordinate].render)
       @game_message.computer_results(@computer_coordinate,
         @player_board.cells[@computer_coordinate].render)
     end
     @game_message.end_game_result(game_winner)
-  end
-
-  def player_shot
-    @game_message.enter_shot
-    loop do
-      @player_coordinate = gets.chomp.upcase
-      if @computer_board.valid_coordinate?(@player_coordinate) &&
-        player_analyze_shot(@player_coordinate)
-        break
-      else
-        @game_message.invalid_input_for_shot
-      end
-    end
-  end
-
-  def player_analyze_shot(coordinate)
-    if @computer_board.cells[coordinate].fired_upon?
-      @game_message.already_fired_on
-      false
-    else
-      @computer_board.cells[coordinate].fire_upon
-      true
-    end
-  end
-
-  def computer_shot
-    loop do
-      @computer_coordinate = @player_board.cells.keys.shuffle.shift
-      if @player_board.valid_coordinate?(@computer_coordinate) &&
-        !@player_board.cells[@computer_coordinate].fired_upon?
-        @player_board.cells[@computer_coordinate].fire_upon
-        break
-      end
-    end
   end
 
   def game_over?

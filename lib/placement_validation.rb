@@ -1,6 +1,5 @@
 class PlacementValidation
   def consecutive?(coordinates)
-    @coordinates = coordinates
     if letters(coordinates).all?(coordinates[0][0])
       numbers(coordinates).size == coordinates.size
     elsif numbers(coordinates).count == 1
