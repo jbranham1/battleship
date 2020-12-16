@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/player_setup'
+require 'mocha/minitest'
 
 class PlayerSetupTest < MiniTest::Test
   def test_it_exists
@@ -16,5 +17,8 @@ class PlayerSetupTest < MiniTest::Test
   end
 
   def test_generate_computer_ships
-  end 
+    player_setup = PlayerSetup.new
+
+    assert_equal 0, player_setup.generate_computer_ships.count
+  end
 end
