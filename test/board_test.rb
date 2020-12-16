@@ -50,6 +50,8 @@ class BoardTest < MiniTest::Test
     assert_equal false, board.valid_placement?(cruiser, ["A1", "A2", "A4"])
     assert_equal false, board.valid_placement?(cruiser, ["A1", "A2", "B3"])
     assert_equal true, board.valid_placement?(cruiser, ["A1", "A2", "A3"])
+    assert_equal true, board.valid_placement?(cruiser, ["B9", "B10", "B8"])
+    assert_equal true, board.valid_placement?(cruiser, ["A4", "A5", "A3"])
   end
 
   def test_valid_placement_vertical
@@ -74,6 +76,7 @@ class BoardTest < MiniTest::Test
     cruiser = Ship.new("Cruiser", 3)
 
     assert_equal true, board.valid_placement?(cruiser, ["A1", "A3", "A2"])
+    assert_equal true, board.valid_placement?(cruiser, ["B10", "C10", "A10"])
   end
 
   def test_check_validation
@@ -107,7 +110,14 @@ class BoardTest < MiniTest::Test
     assert_equal letters, board.letters(["A1", "A2", "A3"])
 
     letters = ["A", "B", "C"]
-    assert_equal letters, board.letters(["A1", "B2", "C3"])
+    assert_equal letters, board.letters(["C1", "B2", "A3"])
+  end
+
+  def test_letters_sort
+    board = Board.new(10)
+    coordinates = ["B10", "C10", "A10"]
+
+    assert_equal ["A", "B", "C"], board.letters_sort(coordinates)
   end
 
   def test_numbers
