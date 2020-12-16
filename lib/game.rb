@@ -115,7 +115,7 @@ class Game
 
   def game_winner
     if computer_ships_sunk? && player_ships_sunk?
-      "Tie"
+      :tie
     elsif computer_ships_sunk?
       :player
     elsif player_ships_sunk?
