@@ -1,7 +1,6 @@
 require "./lib/board_setup"
 require "./lib/game_message"
 require "./lib/board"
-require "./lib/ship"
 require "./lib/turn"
 require "./lib/player_setup"
 

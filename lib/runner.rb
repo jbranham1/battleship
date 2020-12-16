@@ -1,9 +1,7 @@
-require "./lib/game_message"
 require "./lib/game"
 
 puts "Welcome to BATTLESHIP"
 
-message = GameMessage.new
 loop do
   puts "---------------------------------"
   puts "Enter p to play. Enter q to quit."

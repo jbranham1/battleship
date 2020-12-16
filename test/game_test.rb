@@ -19,20 +19,6 @@ class GameTest < MiniTest::Test
     game.stubs(:player_ships_sunk?).returns(true)
 
     assert_equal true, game.game_over?
-
-  end
-
-  def test_computer_ships_sunk
-    game = Game.new
-    computer_cruiser = mock
-    computer_sub = mock
-    computer_cruiser.stubs(:sunk?).returns(true)
-    computer_sub.stubs(:sunk?).returns(false)
-
-    assert_equal false, game.computer_ships_sunk?
-    computer_sub.stubs(:sunk?).returns(true)
-
-    assert_equal false, game.computer_ships_sunk?
   end
 
   def test_game_winner_player

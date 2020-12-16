@@ -25,11 +25,7 @@ class PlacementValidation
 
   def numb_sort(coordinates)
     nums = coordinates.map do |coordinate|
-      if coordinate.chars.count == 2
-        coordinate[1].to_i
-      elsif coordinate.chars.count > 2
-        coordinate[1..-1].to_i
-      end
+      coordinate[1..-1].to_i
     end
     nums.sort.map {|num| num.to_s}
   end
