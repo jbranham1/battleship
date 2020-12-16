@@ -247,7 +247,8 @@ class BoardTest < MiniTest::Test
     expected_cell_values = ".  .  .  .  .  .  .  .  .  . \n"
 
 
-    assert_equal expected_cell_values.chars.count, board.convert_cell_values_to_string[1].chars.count
+    assert_equal expected_cell_values.chars.count, board
+      .convert_cell_values_to_string[1].chars.count
     assert_instance_of String, board.convert_cell_values_to_string[0]
   end
 end
