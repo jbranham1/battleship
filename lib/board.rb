@@ -71,15 +71,14 @@ class Board
   end
 
   def numb_sort(coordinates)
-    nums = []
-    coordinates.each do |coordinate|
+    nums = coordinates.map do |coordinate|
       if coordinate.chars.count == 2
-        nums << coordinate[1].to_i
+        coordinate[1].to_i
       elsif coordinate.chars.count > 2
-        nums << coordinate[1..-1].to_i
+        coordinate[1..-1].to_i
       end
     end
-    nums.sort.map {|num| num.to_s}# (num[0]..num[-1]).to_a
+    nums.sort.map {|num| num.to_s}
   end
 
   def consecutive?(coordinates)
