@@ -12,8 +12,4 @@ class BoardSetup
       end
     end
   end
-
-  def player_place_ship(board, ship, coordinates)
-    board.place(ship, coordinates)
-  end
 end

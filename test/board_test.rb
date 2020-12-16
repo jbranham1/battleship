@@ -3,7 +3,6 @@ require 'minitest/pride'
 require './lib/board'
 require './lib/cell'
 require './lib/ship'
-require 'pry'
 
 class BoardTest < MiniTest::Test
   def test_it_exists
@@ -17,7 +16,7 @@ class BoardTest < MiniTest::Test
 
     assert_equal 16, board.cells.count
     assert_equal Hash, board.cells.class
-    assert_equal 4, board.num_input
+    assert_equal 4, board.board_size
   end
 
   def test_it_has_readable_attributes_for_input
@@ -25,7 +24,7 @@ class BoardTest < MiniTest::Test
 
     assert_equal 100, board.cells.count
     assert_equal Hash, board.cells.class
-    assert_equal 10, board.num_input
+    assert_equal 10, board.board_size
   end
 
   def test_valid_coordinate?
@@ -85,48 +84,6 @@ class BoardTest < MiniTest::Test
 
     assert_equal true, board.check_validation(cruiser, ["A1", "B2", "C3"])
     assert_equal false, board.check_validation(cruiser, ["A1", "B2"])
-  end
-
-  def test_consecutive_horizontal
-    board = Board.new(10)
-    cruiser = Ship.new("Cruiser", 3)
-    assert_equal false, board.consecutive?(["A1", "A2", "A4"])
-    assert_equal false, board.consecutive?(["A1", "A2", "B3"])
-    assert_equal true, board.consecutive?(["A1", "A2", "A3"])
-  end
-
-  def test_consecutive_vertical
-    board = Board.new(10)
-    cruiser = Ship.new("Cruiser", 3)
-
-    assert_equal false, board.consecutive?(["A1", "B2", "C4"])
-    assert_equal false, board.consecutive?(["A1", "B1", "D1"])
-    assert_equal true, board.consecutive?(["A1", "B1", "C1"])
-  end
-
-  def test_letters
-    board = Board.new(10)
-    letters = ["A"]
-    assert_equal letters, board.letters(["A1", "A2", "A3"])
-
-    letters = ["A", "B", "C"]
-    assert_equal letters, board.letters(["C1", "B2", "A3"])
-  end
-
-  def test_letters_sort
-    board = Board.new(10)
-    coordinates = ["B10", "C10", "A10"]
-
-    assert_equal ["A", "B", "C"], board.letters_sort(coordinates)
-  end
-
-  def test_numbers
-    board = Board.new(10)
-    numbers = ["1","2","3"]
-    assert_equal numbers, board.numbers(["A1", "A2", "A3"])
-
-    numbers = ["1"]
-    assert_equal numbers, board.numbers(["A1", "B1", "C1"])
   end
 
   def test_place_ship
@@ -282,7 +239,7 @@ class BoardTest < MiniTest::Test
     expected_cell_values = [[".", ".", ".", "."], [".", ".", ".", "."],
     [".", ".", ".", "."], [".", ".", ".", "."]]
 
-    assert_equal expected_cell_values, board.render_cell_values(4)
+    assert_equal expected_cell_values, board.render_cell_values
   end
 
   def test_convert_cell_values_to_string
@@ -290,7 +247,8 @@ class BoardTest < MiniTest::Test
     expected_cell_values = ".  .  .  .  .  .  .  .  .  . \n"
 
 
-    assert_equal expected_cell_values.chars.count, board.convert_cell_values_to_string[1].chars.count
+    assert_equal expected_cell_values.chars.count, board
+      .convert_cell_values_to_string[1].chars.count
     assert_instance_of String, board.convert_cell_values_to_string[0]
   end
 end

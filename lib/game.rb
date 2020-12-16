@@ -39,13 +39,14 @@ class Game
     @player_ships.each do |ship|
       player_valid_entry(ship)
     end
+
   end
 
   def player_valid_entry(ship)
     @game_message.player_ship_placement(ship.name, ship.length)
     loop do
       player_coordinates = gets.chomp.upcase.split
-      if !@board_setup.player_place_ship(@player_board, ship, player_coordinates).nil?
+      if !@player_board.place(ship, player_coordinates).nil?
         @game_message.player_board_placement(@player_board)
         break
       else
@@ -59,8 +60,10 @@ class Game
       @game_message.show_boards(@computer_board, @player_board)
       player_shot
       computer_shot
-      @game_message.player_results(@player_coordinate, @computer_board.cells[@player_coordinate].render)
-      @game_message.computer_results(@computer_coordinate, @player_board.cells[@computer_coordinate].render)
+      @game_message.player_results(@player_coordinate,
+        @computer_board.cells[@player_coordinate].render)
+      @game_message.computer_results(@computer_coordinate,
+        @player_board.cells[@computer_coordinate].render)
     end
     @game_message.end_game_result(game_winner)
   end

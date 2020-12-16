@@ -1,37 +1,37 @@
 require "./lib/cell"
+require './lib/placement_validation'
 
 class Board
   attr_reader :cells,
               :user_input_cells,
-              :num_input
+              :board_size
 
-  def initialize(num_input = 4)
-    @num_input = num_input
+  def initialize(board_size = 4)
+    @board_size = board_size
     @cells = {}
-    add_cells(num_input)
+    add_cells
+    @placement_validation = PlacementValidation.new
   end
 
-  def add_cells(num_input)
-    add_keys(num_input).map do |key|
+  def add_cells
+    add_keys.map do |key|
       @cells[key] = Cell.new(key)
     end
   end
 
-  def add_keys(num_input)
-    add_keys_horizontal(num_input).each_with_object([]) do |letter, new_keys|
-        num_input.times do |index|
+  def add_keys
+    add_keys_horizontal.each_with_object([]) do |letter, new_keys|
+        @board_size.times do |index|
           new_keys << "#{letter}#{index+1}"
         end
     end
   end
 
-  def add_keys_horizontal(num_input)
-    @alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I",
-      "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
-      "U", "V", "W", "X", "Y", "Z"]
+  def add_keys_horizontal
+    @alphabet = ("A".."Z").to_a
     @new_array = []
     @alphabet.each_with_index do |letter, index|
-      if index < num_input
+      if index < @board_size
         @new_array.push("#{letter}")
       end
     end
@@ -44,7 +44,7 @@ class Board
 
   def valid_placement?(ship, coordinates)
     if check_validation(ship, coordinates)
-      consecutive?(coordinates.sort)
+      @placement_validation.consecutive?(coordinates.sort)
     else
       false
     end
@@ -56,75 +56,44 @@ class Board
       coordinates.all? {|coordinate| @cells[coordinate].empty?}
   end
 
-  def letters(coordinates)
-    [*(letters_sort(coordinates)[0]..letters_sort(coordinates)[-1])]
-  end
-
-  def letters_sort(coordinates)
-    coordinates.map do |coordinate|
-      coordinate[0]
-    end.uniq.sort
-  end
-
-  def numbers(coordinates)
-    [*(numb_sort(coordinates)[0]..numb_sort(coordinates)[-1])]
-  end
-
-  def numb_sort(coordinates)
-    nums = coordinates.map do |coordinate|
-      if coordinate.chars.count == 2
-        coordinate[1].to_i
-      elsif coordinate.chars.count > 2
-        coordinate[1..-1].to_i
-      end
-    end
-    nums.sort.map {|num| num.to_s}
-  end
-
-  def consecutive?(coordinates)
-    if letters(coordinates).all?(coordinates[0][0])
-      numbers(coordinates).size == coordinates.size
-    elsif numbers(coordinates).count == 1
-      letters(coordinates).size == coordinates.size
-    else
-      false
-    end
-  end
-
   def place(ship, coordinates)
     if valid_placement?(ship, coordinates)
       coordinates.each do |coordinate|
         @cells[coordinate].place_ship(ship)
+        ship
       end
     end
   end
 
-  def render_cell_values(num_input)
+  def render_cell_values
     @cells.values.map do |cell|
       cell.render(@show_ship)
-    end.each_slice(num_input).to_a
+    end.each_slice(@board_size).to_a
   end
 
   def convert_cell_values_to_string
-    render_cell_values(num_input).map {|value| "#{value.join("  ")} \n"}
+    render_cell_values.map {|value| "#{value.join("  ")} \n"}
   end
 
   def render(show_ship = false)
     @show_ship = show_ship
     board_values = convert_cell_values_to_string
-    num = 1
-    board_string = build_render_header(num_input)
+    build_render_header + build_render_body(board_values)
+  end
 
-    while num <= num_input do
+  def build_render_body(board_values)
+    num = 1
+    board_string = ""
+    while num <= @board_size do
       board_string += "#{@alphabet[num-1]}  #{board_values[num-1]}"
       num += 1
     end
     board_string
   end
 
-  def build_render_header(num_input)
+  def build_render_header
     board_string = "  "
-    num_input.times do |index|
+    @board_size.times do |index|
       if index < 9
         board_string += "#{index+1}  "
       else
