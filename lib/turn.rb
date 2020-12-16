@@ -15,7 +15,14 @@ class Turn
         @game_message.invalid_input_for_shot
       end
     end
+  end
+
+  def player_coordinate
     @player_coordinate
+  end
+
+  def computer_coordinate
+    @computer_coordinate
   end
 
   def player_analyze_shot(coordinate)
@@ -37,7 +44,6 @@ class Turn
         break
       end
     end
-    @computer_coordinate
   end
 
 end
