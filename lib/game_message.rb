@@ -1,4 +1,3 @@
-require 'pry'
 class GameMessage
   def get_board_size
     puts "Please enter your board size. (Numbers 1-27)"
