@@ -1,10 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/game'
-require './lib/board'
-require './lib/ship'
-require './lib/board_setup'
-require './lib/game_message'
 require 'mocha/minitest'
 
 class GameTest < MiniTest::Test
@@ -14,33 +10,16 @@ class GameTest < MiniTest::Test
     assert_instance_of Game, game
   end
 
-  def test_it_has_readable_attributes
-    game = Game.new
-    assert_instance_of GameMessage, game.game_message
-    assert_instance_of Board, game.computer_board
-    assert_instance_of Board, game.player_board
-    assert_instance_of BoardSetup, game.board_setup
-    assert_instance_of Ship, game.computer_cruiser
-    assert_instance_of Ship, game.computer_sub
-    assert_instance_of Ship, game.player_cruiser
-    assert_instance_of Ship, game.player_sub
-  end
-
   def test_game_over?
     game = Game.new
-    # computer_cruiser = mock
-    # computer_sub = mock
-    # player_cruiser = mock
-    # player_sub = mock
-    #
-    # computer_cruiser.stubs(:sunk?).returns(true)
-    # computer_sub.stubs(:sunk?).returns(true)
-    # player_cruiser.stubs(:sunk?).returns(true)
-    # player_sub.stubs(:sunk?).returns(true)
+    game.stubs(:computer_ships_sunk?).returns(false)
+    game.stubs(:player_ships_sunk?).returns(false)
 
-    game.stubs(:game_over?).returns(true)
+    assert_equal false, game.game_over?
+    game.stubs(:player_ships_sunk?).returns(true)
 
-    # assert_equal true, game.game_over?
+    assert_equal true, game.game_over?
+
   end
 
   def test_computer_ships_sunk
@@ -50,8 +29,47 @@ class GameTest < MiniTest::Test
     computer_cruiser.stubs(:sunk?).returns(true)
     computer_sub.stubs(:sunk?).returns(false)
 
-    game.stubs(:computer_ships_sunk?).returns(true)
+    assert_equal false, game.computer_ships_sunk?
+    computer_sub.stubs(:sunk?).returns(true)
 
+    assert_equal false, game.computer_ships_sunk?
   end
 
+  def test_player_ships_sunk
+    # game = Game.new
+    # ship1 = mock
+    # ship2 = mock
+    # ship1.stubs(:sunk?).returns(true)
+    # ship2.stubs(:sunk?).returns(false)
+    # player_ships = mock
+    # game.stubs(:player_ships).returns([ship1,ship2])
+    # assert_equal false, game.player_ships_sunk?
+  #  ship2.stubs(:player_ships?).returns([ship1,ship2])
+
+  #  assert_equal true, game.player_ships_sunk?
+  end
+
+  def test_game_winner_player
+    game = Game.new
+
+    game.stubs(:computer_ships_sunk?).returns(true)
+    game.stubs(:player_ships_sunk?).returns(false)
+    assert_equal :player, game.game_winner
+  end
+
+  def test_game_winner_computer
+    game = Game.new
+
+    game.stubs(:computer_ships_sunk?).returns(false)
+    game.stubs(:player_ships_sunk?).returns(true)
+    assert_equal :computer, game.game_winner
+  end
+
+  def test_game_winner_tie
+    game = Game.new
+
+    game.stubs(:computer_ships_sunk?).returns(true)
+    game.stubs(:player_ships_sunk?).returns(true)
+    assert_equal :tie, game.game_winner
+  end
 end

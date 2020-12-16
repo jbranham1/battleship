@@ -7,15 +7,14 @@ class Board
 
   def initialize(num_input = 4)
     @num_input = num_input
-    @cells = add_cells(num_input)
+    @cells = {}
+    add_cells(num_input)
   end
 
   def add_cells(num_input)
-    @cells = {}
-    add_keys(num_input).each do |key|
+    add_keys(num_input).map do |key|
       @cells[key] = Cell.new(key)
     end
-    @cells
   end
 
   def add_keys(num_input)
