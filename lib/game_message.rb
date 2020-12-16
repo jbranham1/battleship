@@ -1,21 +1,22 @@
+require 'pry'
 class GameMessage
   def get_board_size
+    puts "Please enter your board size. (Numbers 1-27)"
     loop do
-      puts "Please enter your board size. (Numbers 1-27)"
-      number = gets.chomp
-      if number <= 27
-        return number
-        break
-      else
+      @number = gets.chomp.to_i
+      if @number > 27 || @number < 1
         puts "Invalid board size. Please enter a number between 1 and 27."
+      else
+        break
       end
     end
+    @number
   end
 
   def computer_board_placement
     puts "I have laid out my ships on the grid."
     sleep(1)
-    puts "You now need to lay out your two ships."
+    puts "You now need to lay out your ships."
     sleep(1)
     puts "The Cruiser is three units long and the Submarine is two units long."
   end
@@ -30,7 +31,7 @@ class GameMessage
 
   def player_ship_placement(ship_name, ship_length)
     sleep(1)
-    puts "Enter the squares for the #{ship_name} (#{ship_length} spaces):"
+    puts "Enter the squares for #{ship_name} (#{ship_length} spaces):"
   end
 
   def invalid_input_for_coordinates
