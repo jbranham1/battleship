@@ -41,7 +41,6 @@ class Game
     @player_ships.each do |ship|
       player_valid_entry(ship)
     end
-
   end
 
   def player_valid_entry(ship)
@@ -60,22 +59,10 @@ class Game
   def take_turn
     while !game_over?
       @game_message.show_boards(@computer_board, @player_board)
-      take_shots
-      shot_results
+      @turn.take_shots(@computer_board, @player_board)
+      @turn.shot_results
     end
     @game_message.end_game_result(game_winner)
-  end
-
-  def take_shots
-    @turn.player_shot(@computer_board)
-    @turn.computer_shot(@player_board)
-  end
-
-  def shot_results
-    @game_message.player_results(@turn.player_coordinate,
-      @computer_board.cells[@turn.player_coordinate].render)
-    @game_message.computer_results(@turn.computer_coordinate,
-      @player_board.cells[@turn.computer_coordinate].render)
   end
 
   def game_over?
