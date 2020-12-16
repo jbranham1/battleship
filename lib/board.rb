@@ -57,20 +57,35 @@ class Board
   end
 
   def letters(coordinates)
-    (coordinates[0][0]..coordinates[-1][0]).to_a
+    [*(letters_sort(coordinates)[0]..letters_sort(coordinates)[-1])]
+  end
+
+  def letters_sort(coordinates)
+    coordinates.map do |coordinate|
+      coordinate[0]
+    end.uniq.sort
   end
 
   def numbers(coordinates)
-    num = coordinates.map do |coordinate|
-      coordinate[1]
-    end.sort
-    (num[0]..num[-1]).to_a
+    [*(numb_sort(coordinates)[0]..numb_sort(coordinates)[-1])]
+  end
+
+  def numb_sort(coordinates)
+    nums = []
+    coordinates.each do |coordinate|
+      if coordinate.chars.count == 2
+        nums << coordinate[1].to_i
+      elsif coordinate.chars.count > 2
+        nums << coordinate[1..-1].to_i
+      end
+    end
+    nums.sort.map {|num| num.to_s}# (num[0]..num[-1]).to_a
   end
 
   def consecutive?(coordinates)
     if letters(coordinates).all?(coordinates[0][0])
       numbers(coordinates).size == coordinates.size
-    elsif numbers(coordinates).all?(coordinates[0][1])
+    elsif numbers(coordinates).count == 1
       letters(coordinates).size == coordinates.size
     else
       false
