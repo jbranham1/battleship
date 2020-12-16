@@ -1,4 +1,5 @@
 require "./lib/cell"
+require './lib/placement_validation'
 
 class Board
   attr_reader :cells,
@@ -9,6 +10,7 @@ class Board
     @board_size = board_size
     @cells = {}
     add_cells
+    @placement_validation = PlacementValidation.new
   end
 
   def add_cells
@@ -26,9 +28,7 @@ class Board
   end
 
   def add_keys_horizontal
-    @alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I",
-      "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
-      "U", "V", "W", "X", "Y", "Z"]
+    @alphabet = ("A".."Z").to_a
     @new_array = []
     @alphabet.each_with_index do |letter, index|
       if index < @board_size
@@ -44,7 +44,7 @@ class Board
 
   def valid_placement?(ship, coordinates)
     if check_validation(ship, coordinates)
-      consecutive?(coordinates.sort)
+      @placement_validation.consecutive?(coordinates.sort)
     else
       false
     end
@@ -56,45 +56,11 @@ class Board
       coordinates.all? {|coordinate| @cells[coordinate].empty?}
   end
 
-  def letters(coordinates)
-    [*(letters_sort(coordinates)[0]..letters_sort(coordinates)[-1])]
-  end
-
-  def letters_sort(coordinates)
-    coordinates.map do |coordinate|
-      coordinate[0]
-    end.uniq.sort
-  end
-
-  def numbers(coordinates)
-    [*(numb_sort(coordinates)[0]..numb_sort(coordinates)[-1])]
-  end
-
-  def numb_sort(coordinates)
-    nums = coordinates.map do |coordinate|
-      if coordinate.chars.count == 2
-        coordinate[1].to_i
-      elsif coordinate.chars.count > 2
-        coordinate[1..-1].to_i
-      end
-    end
-    nums.sort.map {|num| num.to_s}
-  end
-
-  def consecutive?(coordinates)
-    if letters(coordinates).all?(coordinates[0][0])
-      numbers(coordinates).size == coordinates.size
-    elsif numbers(coordinates).count == 1
-      letters(coordinates).size == coordinates.size
-    else
-      false
-    end
-  end
-
   def place(ship, coordinates)
     if valid_placement?(ship, coordinates)
       coordinates.each do |coordinate|
         @cells[coordinate].place_ship(ship)
+        ship
       end
     end
   end

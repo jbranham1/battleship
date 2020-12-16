@@ -39,13 +39,15 @@ class Game
     @player_ships.each do |ship|
       player_valid_entry(ship)
     end
+
   end
 
   def player_valid_entry(ship)
     @game_message.player_ship_placement(ship.name, ship.length)
     loop do
       player_coordinates = gets.chomp.upcase.split
-      if !@board_setup.player_place_ship(@player_board, ship, player_coordinates).nil?
+      #if !@board_setup.player_place_ship(@player_board, ship, player_coordinates).nil?
+      if !@player_board.place(ship, player_coordinates).nil?
         @game_message.player_board_placement(@player_board)
         break
       else
