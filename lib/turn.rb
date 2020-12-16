@@ -1,3 +1,5 @@
+require './lib/game_message'
+
 class Turn
   def initialize
     @game_message = GameMessage.new

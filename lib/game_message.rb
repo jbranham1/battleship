@@ -1,6 +1,6 @@
 class GameMessage
   def get_board_size
-    puts "Please enter your board size. (Numbers 1-27)"
+    puts "Please enter your board size. (Numbers 4-26)"
     loop do
       @number = gets.chomp.to_i
       if @number > 26 || @number < 4
@@ -21,7 +21,7 @@ class GameMessage
   end
 
   def player_ships
-    puts "============"
+    puts "========================================"
     puts "Player Ships"
   end
 

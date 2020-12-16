@@ -1,12 +1,10 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/board'
-require './lib/cell'
 require './lib/ship'
 require './lib/board_setup'
 require './lib/game_message'
 require './lib/board'
-require 'pry'
 
 class BoardSetupTest < MiniTest::Test
   def test_it_exists
@@ -52,6 +50,7 @@ class BoardSetupTest < MiniTest::Test
     submarine = Ship.new("Submarine", 2)
     cruiser_cells = board_setup.computer_select_cells(board, cruiser.length)
     submarine_cells = board_setup.computer_select_cells(board, submarine.length)
+
     assert_equal random_cruiser.length, cruiser_cells.length
     assert_equal random_sub.length, submarine_cells.length
   end

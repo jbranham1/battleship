@@ -26,7 +26,7 @@ class PlayerSetup
       end
     end
     puts "Let's play!"
-    puts "==============================="
+    puts "========================================"
   end
 
   def add_another?
@@ -55,8 +55,8 @@ class PlayerSetup
     loop do
       @game_message.get_ship_length
       @length = gets.chomp.to_i
-      if @length < 1 || @length > board_length
-        puts "Length must be a number between 1 and #{board_length}"
+      if @length < 2 || @length > board_length
+        puts "Length must be a number between 2 and #{board_length}"
       else
         @board_cells_count += @length
         break
