@@ -17,7 +17,7 @@ class BoardTest < MiniTest::Test
 
     assert_equal 16, board.cells.count
     assert_equal Hash, board.cells.class
-    assert_equal 4, board.num_input
+    assert_equal 4, board.board_size
   end
 
   def test_it_has_readable_attributes_for_input
@@ -25,7 +25,7 @@ class BoardTest < MiniTest::Test
 
     assert_equal 100, board.cells.count
     assert_equal Hash, board.cells.class
-    assert_equal 10, board.num_input
+    assert_equal 10, board.board_size
   end
 
   def test_valid_coordinate?
@@ -282,7 +282,7 @@ class BoardTest < MiniTest::Test
     expected_cell_values = [[".", ".", ".", "."], [".", ".", ".", "."],
     [".", ".", ".", "."], [".", ".", ".", "."]]
 
-    assert_equal expected_cell_values, board.render_cell_values(4)
+    assert_equal expected_cell_values, board.render_cell_values
   end
 
   def test_convert_cell_values_to_string
