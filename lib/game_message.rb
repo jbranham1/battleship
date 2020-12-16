@@ -3,8 +3,8 @@ class GameMessage
     puts "Please enter your board size. (Numbers 1-27)"
     loop do
       @number = gets.chomp.to_i
-      if @number > 27 || @number < 1
-        puts "Invalid board size. Please enter a number between 1 and 27."
+      if @number > 26 || @number < 4
+        puts "Invalid board size. Please enter a number between 4 and 26."
       else
         break
       end
