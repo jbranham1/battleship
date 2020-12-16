@@ -21,6 +21,11 @@ class GameMessage
     puts "The Cruiser is three units long and the Submarine is two units long."
   end
 
+  def player_ships
+    puts "============"
+    puts "Player Ships"
+  end
+
   def get_ship_name
     puts "Please enter the name of your ship:"
   end

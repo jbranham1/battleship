@@ -9,8 +9,7 @@ class PlayerSetup
   end
 
   def get_ships(board_length)
-    puts "============"
-    puts "Player Ships"
+    @game_message.player_ships
     loop do
       @ships << Ship.new(get_name, get_length(board_length))
       puts "Ship added. Would you like to add another? Yes/No"
